@@ -8,7 +8,7 @@
 #ifndef CALCULATOR_H_
 #define CALCULATOR_H_
 /*
- * NUM_OPERANDS Permette di scegliere il numero di operandi aspettati. se non ne trova verranno automaticamente settati a 0
+ * NUM_OPERANDS is the max num of the operands
  */
 #define NUM_OPERANDS 2
 

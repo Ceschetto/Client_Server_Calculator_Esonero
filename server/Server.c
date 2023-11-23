@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
 
 			double op[NUM_OPERANDS]; //operands needed by the calculator
 			char operand; //operator needed by the calculator
-
+			//parse the string buffer
 			n = parser(&operand, op, buffer);
 			if(n == 0)
 			{
@@ -136,10 +136,10 @@ void clearwinsock() {
 int generateSocket(size_t namespace, size_t style, size_t protocol)
 {
 	int sock = socket(namespace, style, protocol);
-	if(sock != -1) puts("socket creata con successo");
+	if(sock != -1) puts("socket generated successfully");
 	else
 	{
-		puts("Errore, non è stato possibile creare la socket");
+		puts("Error, could't generate socket");
 		clearwinsock();
 	}
 	return sock;
@@ -159,10 +159,10 @@ int listening(int sock, int queue_len)
 {
 
 	int r;
-	if((r = listen(sock, queue_len))>=0) puts("Socket in ascolto...");
+	if((r = listen(sock, queue_len))>=0) puts("Socket listening..");
 	else
 	{
-		puts("Errore listening fallito");
+		puts("Error listening failed");
 		closesocket(sock);
 		clearwinsock();
 	}
@@ -174,7 +174,7 @@ int accepting(int welcomeSocket, sockAddr_in *clientAddress)
 	int newSocket;
 	socklen_t clientAddress_len = sizeof(*clientAddress);
 	if((newSocket = accept(welcomeSocket, (struct sockaddr *) clientAddress, &clientAddress_len )) >= 0)
-		puts("Nuova connessione accettata.");
+		puts("New connection established.");
 	else
 	{
 		puts("accept failed");
@@ -205,7 +205,7 @@ int recvMsg(int clientSocket, char *buffer, size_t buffer_size, int flags)
 		closesocket(clientSocket);
 		clearwinsock();
 		return -1;
-	}//puts("Messaggio ricevuto");
+	}
 	return 0;
 }
 
@@ -226,7 +226,7 @@ int bindSocket(int socket, sockAddr_in *serverAddress)
 
 int parser(char *operand, double op[NUM_OPERANDS], char *buffer)
 {
-	//setto a 0 tutti gli operandi
+	//set to 0 all operands
 	memset(op, 0, sizeof(int) * NUM_OPERANDS);
 
 	switch(buffer[0])
@@ -252,8 +252,7 @@ int parser(char *operand, double op[NUM_OPERANDS], char *buffer)
 	}
 	//move the pointer to the buffer to where i should find the first operand
 	buffer+=2;
-	//strtod converte la stringa in un double e restituisce un puntatore a dove termina il numero trovato
-	//se becca una stringa che non è convertibile ritorna 0
+	/*strtod convert the string to double. the operands not found are set to by default 0.*/
 	for(int i = 0; i < NUM_OPERANDS && buffer != NULL; ++i)	op[i] = strtod(buffer, &buffer);
 
 
