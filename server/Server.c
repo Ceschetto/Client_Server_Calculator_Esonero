@@ -113,16 +113,13 @@ int main(int argc, char *argv[]) {
 
 			if(sendMsg(clientSocket, buffer, 0) == -1) break;
 
-			memset(buffer, 0, BUFFER_SIZE - 1);
+			memset(buffer, 0, BUFFER_SIZE );
 
 		}
 		closesocket(clientSocket);
-		clearwinsock();
-
-
 
 	}
-
+	clearwinsock();
 } // main end
 
 
@@ -241,17 +238,17 @@ int parser(char *operand, double op[NUM_OPERANDS], char *buffer)
 	case '-':
 		*operand = '-';
 		break;
-	case '*':
-		*operand = '*';
+	case 'x':
+		*operand = 'x';
 		break;
 	case '/':
 		*operand = '/';
 		break;
 	case '=':
-		memset(buffer, 0, BUFFER_SIZE - 1);
+		memset(buffer, 0, BUFFER_SIZE);
 		return 1;
 	default:
-		memset(buffer, 0, BUFFER_SIZE - 1);
+		memset(buffer, 0, BUFFER_SIZE);
 		return -1;
 	}
 	//move the pointer to the buffer to where i should find the first operand
@@ -260,7 +257,7 @@ int parser(char *operand, double op[NUM_OPERANDS], char *buffer)
 	for(int i = 0; i < NUM_OPERANDS && buffer != NULL; ++i)	op[i] = strtod(buffer, &buffer);
 
 
-	memset(buffer, 0, BUFFER_SIZE - 1);
+	memset(buffer, 0, BUFFER_SIZE);
 
 	return 0;
 

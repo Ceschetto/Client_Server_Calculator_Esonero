@@ -16,7 +16,7 @@ double doOperation(double op[NUM_OPERANDS], char operand)
 	case '+':
 		result = add(op);
 		break;
-	case '*':
+	case 'x':
 		result = mult(op);
 		break;
 	case '-':
