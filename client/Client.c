@@ -18,7 +18,7 @@
 #define closesocket close
 #endif
 
-
+#define NO_ERROR 0
 
 #include <string.h>
 #include <stdio.h>
@@ -33,7 +33,7 @@ void clearwinsock();
 int generateSocket(size_t namespace, size_t style, size_t protocol);
 sockAddr_in setAddres(char *address, size_t family ,size_t port);
 int connecting(int clientSocket, sockAddr_in *serverAddress, size_t serverAddress_len);
-int recvMsg(int clientSocket, char *buffer, size_t buffer_size, int flags);
+int recvMsg(int clientSocket, char *buffer, size_t size, int flags);
 int sendMsg(int clientSocket, char *msg, int flags);
 void flushStdin();
 
@@ -62,9 +62,6 @@ int main(int argc, char *argv[]) {
 	// connection
 	if (connecting(clientSocket, &serverAddress, sizeof(serverAddress)) == -1) return -1;
 
-
-	// receive from server
-	char buffer[BUFFER_SIZE];
 
 
 	do
@@ -140,10 +137,10 @@ int connecting(int clientSocket, sockAddr_in *serverAddress, size_t serverAddres
 	return 0;
 }
 
-int recvMsg(int clientSocket, char *buffer, size_t buffer_size, int flags)
+int recvMsg(int clientSocket, char *buffer, size_t size, int flags)
 {
-	memset(buffer, '\0', BUFFER_SIZE);
-	if ((recv(clientSocket, buffer, buffer_size-1, flags)) <= 0) {
+	memset(buffer, '\0', size);
+	if ((recv(clientSocket, buffer, size, flags)) <= 0) {
 		puts("recv() failed or connection closed prematurely");
 		return -1;
 	}

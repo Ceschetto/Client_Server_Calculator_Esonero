@@ -19,6 +19,8 @@
 #define closesocket close
 #endif
 
+#define NO_ERROR 0
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -82,7 +84,7 @@ int main(int argc, char *argv[]) {
 		// accept new connection
 		if( (clientSocket = accepting(serverSocket, &clientAddress)) == -1) return -1;
 
-		printf("Handling client %s = %s:%d\n",( gethostbyaddr((char *)&(clientAddress.sin_addr.s_addr), (socklen_t)sizeof(clientAddress), AF_INET)->h_name), inet_ntoa(clientAddress.sin_addr), htons(clientAddress.sin_port));
+		printf("Handling client %s = %s:%d\n",( gethostbyaddr((char *)&(clientAddress.sin_addr.s_addr), sizeof(clientAddress), AF_INET)->h_name), inet_ntoa(clientAddress.sin_addr), htons(clientAddress.sin_port));
 
 		for(int n = 0; n != 1; )
 		{
@@ -172,7 +174,7 @@ int listening(int sock, int queue_len)
 int accepting(int welcomeSocket, sockAddr_in *clientAddress)
 {
 	int newSocket;
-	socklen_t clientAddress_len = sizeof(*clientAddress);
+	unsigned int clientAddress_len = sizeof(*clientAddress);
 	if((newSocket = accept(welcomeSocket, (struct sockaddr *) clientAddress, &clientAddress_len )) >= 0)
 		puts("New connection established.");
 	else
