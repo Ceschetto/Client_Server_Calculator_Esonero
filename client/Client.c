@@ -8,7 +8,10 @@
 
 #if defined WIN32
 #include <winsock.h>
+#define NO_ERROR 0
+
 #else
+
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -18,7 +21,6 @@
 #define closesocket close
 #endif
 
-#define NO_ERROR 0
 
 #include <string.h>
 #include <stdio.h>

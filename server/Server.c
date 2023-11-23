@@ -8,6 +8,8 @@
 
 #ifdef WIN32
 #include <winsock.h>
+#define NO_ERROR 0
+
 #else
 
 #include <unistd.h>
@@ -19,7 +21,7 @@
 #define closesocket close
 #endif
 
-#define NO_ERROR 0
+
 
 #include <stdio.h>
 #include <stdlib.h>
